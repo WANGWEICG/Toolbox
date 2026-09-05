@@ -3,68 +3,135 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07101c">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="王偉工具箱">
-<title>王偉的萬用工具箱 v2</title>
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="theme-color" content="#0b1020">
+<title>王偉的萬用工具箱 v3</title>
 <style>
-:root{--bg:#050914;--panel:#0d1626;--panel2:#101d31;--line:#22324d;--text:#f5f8fd;--muted:#94a5bf;--a:#65d8ff;--b:#9e8cff;--good:#4adea1;--bad:#ff7182;--warn:#ffd166;--r:22px}
-*{box-sizing:border-box}html{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% -5%,rgba(101,216,255,.13),transparent 30%),radial-gradient(circle at 95% 0%,rgba(158,140,255,.12),transparent 25%),var(--bg)}button,input,select{font:inherit}a{color:inherit}.shell{max-width:900px;margin:auto;padding:env(safe-area-inset-top) 16px calc(96px + env(safe-area-inset-bottom))}.hero{padding:24px 4px 18px}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--a);font-weight:900}h1{margin:8px 0;font-size:30px}.sub{font-size:13px;line-height:1.6;color:var(--muted)}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.pill{font-size:11px;border:1px solid var(--line);padding:7px 10px;border-radius:999px;color:#c8d4e6;background:rgba(255,255,255,.02)}.grid{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid.active{display:grid}.card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:var(--r);padding:16px}.wide{grid-column:1/-1}.card h2{font-size:17px;margin:0 0 4px}.desc,.small{font-size:11px;line-height:1.55;color:var(--muted)}.metric{font-size:26px;font-weight:900;letter-spacing:-.03em}.quotegrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quote{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}.symbol{font-size:15px;font-weight:900}.name{font-size:11px;color:var(--muted)}.price{font-size:23px;font-weight:900;margin-top:6px}.up{color:var(--bad)}.down{color:var(--good)}.flat{color:var(--muted)}.between{display:flex;justify-content:space-between;gap:10px;align-items:center}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.btn{border:0;border-radius:14px;padding:11px 14px;background:linear-gradient(135deg,var(--a),var(--b));color:#06111d;font-weight:900}.secondary{background:#17253b;color:#eef4ff;border:1px solid var(--line)}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}label{display:block;font-size:11px;color:#a7b6ca;margin-bottom:6px}input,select{width:100%;padding:12px;border-radius:13px;border:1px solid var(--line);background:#091322;color:#fff;outline:none}.result{margin-top:12px;padding:14px;background:#091322;border:1px solid var(--line);border-radius:15px}.forecast{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.day{background:#091322;border:1px solid var(--line);border-radius:14px;text-align:center;padding:10px 5px;font-size:11px}.ico{font-size:24px;margin:5px 0}.status{margin-top:10px;font-size:11px;line-height:1.5}.ok{color:var(--good)}.err{color:var(--bad)}.warn{color:var(--warn)}.links{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.link{padding:13px;border:1px solid var(--line);background:#091322;border-radius:15px;text-decoration:none}.link b{display:block;font-size:13px}.link span{font-size:11px;color:var(--muted)}.nav{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));width:min(calc(100% - 24px),680px);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:8px;background:rgba(8,14,24,.9);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:20px}.nav button{border:0;background:transparent;color:#8fa0b8;border-radius:13px;padding:8px 4px;font-size:10px;font-weight:800}.nav span{display:block;font-size:19px;margin-bottom:3px}.nav button.active{background:#17253b;color:#fff}@media(max-width:650px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.formgrid{grid-template-columns:1fr 1fr}}
+:root{--bg:#07101a;--card:#101a2a;--line:#263550;--text:#f5f7fb;--muted:#9aaac2;--good:#42d39b;--bad:#ff6f7d;--accent:#63d9ff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#09111d,#07101a);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif}
+.wrap{max-width:820px;margin:auto;padding:22px 14px 44px}.top{padding:8px 2px 18px}h1{margin:4px 0 6px;font-size:29px}.sub{color:var(--muted);font-size:13px;line-height:1.6}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-size:11px;color:#cbd5e5;margin-top:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px}.wide{grid-column:1/-1}
+h2{font-size:16px;margin:0 0 3px}.desc{color:var(--muted);font-size:11px;margin-bottom:12px}.big{font-size:26px;font-weight:900}.small{font-size:11px;color:var(--muted)}
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quote{background:#0b1422;border:1px solid var(--line);border-radius:14px;padding:12px}.symbol{font-weight:900}.name{font-size:10px;color:var(--muted)}.price{font-size:22px;font-weight:900;margin-top:5px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.item{flex:1;min-width:110px}.ok{color:var(--good)}.bad{color:var(--bad)}
+input,select,button{font:inherit}input,select{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:#0b1422;color:white}
+label{font-size:11px;color:var(--muted);display:block;margin-bottom:5px}.forms{display:grid;grid-template-columns:1fr 1fr;gap:9px}.btn{margin-top:10px;padding:11px 13px;border:0;border-radius:12px;background:linear-gradient(135deg,#63d9ff,#9c8cff);font-weight:800;color:#05101a}
+.result{margin-top:10px;border:1px solid var(--line);border-radius:13px;padding:12px;background:#0b1422}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:8px}.links a{text-decoration:none;color:var(--text);border:1px solid var(--line);background:#0b1422;border-radius:13px;padding:11px}.links strong{font-size:12px}.links span{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.forms{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<div class="shell">
-<header class="hero">
-  <div class="eyebrow">WANG WEI TOOLBOX · V2 STABLE</div>
-  <h1>王偉的萬用工具箱</h1>
-  <div class="sub">穩定版：手機不再直接連第三方 API。GitHub 在雲端更新資料，工具箱只讀自己的資料檔。</div>
-  <div class="pills"><div class="pill" id="clock">台灣時間 --:--</div><div class="pill" id="net">🟢 已連線</div><div class="pill" id="updated">資料更新：尚未取得</div></div>
-</header>
-
-<section id="home" class="grid active">
-  <div class="card wide">
-    <div class="between"><div><h2>📈 0050 / 0056</h2><div class="desc">由 GitHub 雲端抓取 TWSE，再由本頁同網域讀取。</div></div><button class="btn secondary" onclick="loadData(true)">重新整理</button></div>
-    <div class="quotegrid" id="homeQuotes"><div class="quote"><div class="symbol">0050</div><div class="name">元大台灣50</div><div class="price">--</div></div><div class="quote"><div class="symbol">0056</div><div class="name">元大高股息</div><div class="price">--</div></div></div>
-    <div class="status" id="stockStatus">等待 GitHub 資料更新。</div>
+<div class="wrap">
+  <div class="top">
+    <div class="small">WANG WEI TOOLBOX · V3 STABLE</div>
+    <h1>王偉的萬用工具箱</h1>
+    <div class="sub">這版不讓 iPhone 直接連 TWSE、匯率或天氣 API。手機只讀同一個 GitHub Pages 網站內的資料。</div>
+    <div class="badge" id="updated">資料尚未更新</div>
   </div>
-  <div class="card"><h2>💱 USD / TWD</h2><div class="desc">參考中間匯率</div><div class="metric" id="usdTwd">--</div><div class="small">1 USD ≈ TWD</div></div>
-  <div class="card"><h2>🌤️ 高雄天氣</h2><div class="desc">Open-Meteo 雲端更新</div><div class="metric" id="homeTemp">--°</div><div class="small" id="homeWeather">等待資料</div></div>
-  <div class="card wide"><h2>⚡ Tesla 台灣</h2><div class="desc">官方入口</div><div class="links"><a class="link" href="https://www.tesla.com/zh_tw/modely" target="_blank" rel="noopener"><b>Model Y</b><span>官方規格 / 訂購</span></a><a class="link" href="https://www.tesla.com/zh_tw" target="_blank" rel="noopener"><b>Tesla 台灣</b><span>活動與車款</span></a></div></div>
-</section>
 
-<section id="market" class="grid">
-  <div class="card wide"><h2>💱 匯率換算</h2><div class="desc">使用 GitHub 雲端抓到的最新匯率，不由手機直接連 API。</div><div class="formgrid"><div><label>台幣金額</label><input id="fxAmount" type="number" value="10000"></div><div><label>換成</label><select id="fxTarget"><option value="USD">美元 USD</option><option value="JPY">日圓 JPY</option><option value="PHP">菲律賓披索 PHP</option><option value="EUR">歐元 EUR</option><option value="GBP">英鎊 GBP</option><option value="CNY">人民幣 CNY</option></select></div></div><button class="btn" style="margin-top:10px" onclick="convertFx()">換算</button><div class="result"><div class="small">結果</div><div class="metric" id="fxResult">--</div><div class="small" id="fxText">等待資料</div></div></div>
-</section>
+  <div class="grid">
+    <div class="card wide">
+      <h2>📈 0050 / 0056</h2>
+      <div class="desc">GitHub 雲端更新後再由本頁讀取，不走手機跨網域。</div>
+      <div class="quotes">
+        <div class="quote"><div class="symbol">0050</div><div class="name">元大台灣50</div><div class="price" id="p0050">--</div><div class="small" id="c0050">--</div></div>
+        <div class="quote"><div class="symbol">0056</div><div class="name">元大高股息</div><div class="price" id="p0056">--</div><div class="small" id="c0056">--</div></div>
+      </div>
+    </div>
 
-<section id="weather" class="grid">
-  <div class="card wide"><h2>🌦️ 高雄 4 日天氣</h2><div class="desc">不需要定位權限。</div><div class="row"><div class="metric" id="tempNow">--°C</div><div class="small" id="weatherDesc">等待資料</div></div><div class="forecast" id="forecast"></div></div>
-</section>
+    <div class="card">
+      <h2>💵 USD/TWD</h2><div class="desc">參考匯率</div>
+      <div class="big" id="usd">--</div><div class="small">1 USD ≈ TWD</div>
+    </div>
 
-<section id="car" class="grid">
-  <div class="card wide"><h2>🚘 車貸試算</h2><div class="desc">完全離線可用。</div><div class="formgrid"><div><label>車價</label><input id="carPrice" type="number" value="2010900"></div><div><label>頭期款</label><input id="downPayment" type="number" value="280000"></div><div><label>年利率 %</label><input id="annualRate" type="number" step="0.01" value="2.13"></div><div><label>期數（月）</label><input id="months" type="number" value="84"></div></div><button class="btn" style="margin-top:10px" onclick="calcLoan()">計算</button><div class="result" id="loanResult"></div></div>
-  <div class="card wide"><h2>⛽ 油車 vs ⚡ 電車</h2><div class="desc">完全離線可用。</div><div class="formgrid"><div><label>每月里程 km</label><input id="monthlyKm" type="number" value="1500"></div><div><label>油耗 km/L</label><input id="gasKml" type="number" value="12"></div><div><label>汽油 $/L</label><input id="gasPrice" type="number" value="31.5"></div><div><label>電耗 Wh/km</label><input id="evWhkm" type="number" value="150"></div><div><label>電價 $/kWh</label><input id="electricityPrice" type="number" value="3"></div></div><button class="btn" style="margin-top:10px" onclick="calcEnergy()">比較</button><div class="result" id="energyResult"></div></div>
-</section>
+    <div class="card">
+      <h2>🌤️ 高雄天氣</h2><div class="desc">雲端抓取</div>
+      <div class="big" id="temp">--°</div><div class="small" id="weatherText">--</div>
+    </div>
 
-<section id="more" class="grid">
-  <div class="card wide"><h2>🩺 連線狀態</h2><div class="desc">v2 只需要連你自己的 GitHub Pages。若資料抓不到，問題會集中成單一來源，容易排除。</div><div class="result"><div class="row"><b>工具箱資料檔</b><span id="dataHealth" class="warn">尚未檢查</span></div><div class="small" id="dataDetail" style="margin-top:8px">./data/summary.json</div></div></div>
-  <div class="card wide"><h2>🧰 官方入口</h2><div class="links"><a class="link" href="https://www.twse.com.tw/" target="_blank"><b>臺灣證券交易所</b><span>官方市場資訊</span></a><a class="link" href="https://www.cwa.gov.tw/" target="_blank"><b>中央氣象署</b><span>官方天氣</span></a></div></div>
-</section>
+    <div class="card wide">
+      <h2>💱 匯率快速換算</h2>
+      <div class="forms">
+        <div><label>TWD 金額</label><input id="fxAmount" type="number" value="10000"></div>
+        <div><label>幣別</label>
+          <select id="fxTarget"><option>USD</option><option>JPY</option><option>PHP</option><option>EUR</option><option>GBP</option><option>CNY</option></select>
+        </div>
+      </div>
+      <button class="btn" onclick="convertFx()">換算</button>
+      <div class="result"><div class="big" id="fxResult">--</div><div class="small" id="fxRate">等待資料</div></div>
+    </div>
+
+    <div class="card wide">
+      <h2>🚘 車貸試算</h2>
+      <div class="forms">
+        <div><label>車價</label><input id="price" type="number" value="2010900"></div>
+        <div><label>頭期款</label><input id="down" type="number" value="280000"></div>
+        <div><label>年利率 %</label><input id="rate" type="number" step="0.01" value="2.13"></div>
+        <div><label>期數</label><input id="months" type="number" value="84"></div>
+      </div>
+      <button class="btn" onclick="loan()">計算</button>
+      <div class="result" id="loanResult">--</div>
+    </div>
+
+    <div class="card wide">
+      <h2>⚡ 官方入口</h2>
+      <div class="links">
+        <a href="https://www.tesla.com/zh_tw/modely" target="_blank"><strong>Tesla Model Y</strong><span>官方頁面</span></a>
+        <a href="https://www.twse.com.tw/" target="_blank"><strong>臺灣證券交易所</strong><span>官方市場資訊</span></a>
+      </div>
+    </div>
+  </div>
 </div>
-<nav class="nav"><button class="active" data-tab="home"><span>⌂</span>首頁</button><button data-tab="market"><span>📊</span>市場</button><button data-tab="weather"><span>☁️</span>天氣</button><button data-tab="car"><span>🚗</span>用車</button><button data-tab="more"><span>•••</span>更多</button></nav>
 <script>
-const $=s=>document.querySelector(s); const fmt=n=>Number(n).toLocaleString('zh-TW',{maximumFractionDigits:2}); const money=n=>'NT$ '+Math.round(Number(n)||0).toLocaleString('zh-TW'); let APPDATA=null;
-function tick(){ $('#clock').textContent='台灣時間 '+new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()); } tick();setInterval(tick,30000); function net(){ $('#net').textContent=navigator.onLine?'🟢 已連線':'🔴 離線'; }net();addEventListener('online',net);addEventListener('offline',net);
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));$('#'+b.dataset.tab).classList.add('active')});
-function wicon(code){if(code===0)return['☀️','晴朗'];if([1,2].includes(code))return['🌤️','晴時多雲'];if(code===3)return['☁️','多雲'];if([45,48].includes(code))return['🌫️','霧'];if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return['🌧️','有雨'];if([95,96,99].includes(code))return['⛈️','雷雨'];return['🌡️','天氣'];}
-async function loadData(manual=false){try{const r=await fetch('./data/summary.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(!j||j.status==='pending')throw new Error('資料尚未由 GitHub Actions 更新');APPDATA=j;renderAll();$('#dataHealth').textContent='✓ 正常';$('#dataHealth').className='ok';$('#dataDetail').textContent='同網域資料讀取成功';localStorage.setItem('ww_v2_data',JSON.stringify(j));}catch(e){const c=localStorage.getItem('ww_v2_data');if(c){try{APPDATA=JSON.parse(c);renderAll();$('#dataHealth').textContent='⚠ 顯示快取';$('#dataHealth').className='warn';$('#dataDetail').textContent=String(e.message||e);}catch(_){}}else{$('#dataHealth').textContent='✕ 資料尚未更新';$('#dataHealth').className='err';$('#dataDetail').textContent=String(e.message||e);$('#stockStatus').innerHTML='<span class="err">GitHub 雲端資料尚未建立。請先執行 Update Toolbox Data workflow。</span>';}}}
-function renderAll(){if(!APPDATA)return;$('#updated').textContent='資料更新：'+(APPDATA.updated_at_taipei||APPDATA.updated_at||'--');const stocks=APPDATA.stocks||[];const q=stocks.map(x=>{const ch=Number(x.change||0),cls=ch>0?'up':ch<0?'down':'flat';return `<div class="quote"><div class="symbol">${x.code}</div><div class="name">${x.name||''}</div><div class="price">${x.close==null?'--':fmt(x.close)}</div><div class="small ${cls}">${ch>0?'+':''}${Number.isFinite(ch)?fmt(ch):'--'}</div></div>`}).join('');if(q)$('#homeQuotes').innerHTML=q;$('#stockStatus').innerHTML=APPDATA.stock_error?'<span class="warn">台股雲端更新有異常：'+APPDATA.stock_error+'</span>':'<span class="ok">✓ 台股雲端資料正常</span>';if(APPDATA.fx?.rates?.USD){$('#usdTwd').textContent=(1/APPDATA.fx.rates.USD).toFixed(2)};const w=APPDATA.weather;if(w?.current){const inf=wicon(Number(w.current.weather_code));$('#homeTemp').textContent=fmt(w.current.temperature_2m)+'°';$('#homeWeather').textContent=inf[1]+' · 體感 '+fmt(w.current.apparent_temperature)+'°';$('#tempNow').textContent=fmt(w.current.temperature_2m)+'°C';$('#weatherDesc').textContent=`高雄 · ${inf[1]} · 體感 ${fmt(w.current.apparent_temperature)}°C · 濕度 ${fmt(w.current.relative_humidity_2m)}%`;const d=w.daily||{};$('#forecast').innerHTML=(d.time||[]).map((date,i)=>{const x=wicon(Number(d.weather_code[i]));const wd=new Intl.DateTimeFormat('zh-TW',{weekday:'short'}).format(new Date(date+'T12:00:00'));return `<div class="day"><b>${wd}</b><div class="ico">${x[0]}</div><div>${fmt(d.temperature_2m_max[i])}° / ${fmt(d.temperature_2m_min[i])}°</div><div class="small">雨 ${fmt(d.precipitation_probability_max[i])}%</div></div>`}).join('')}convertFx();}
-function convertFx(){if(!APPDATA?.fx?.rates)return;const a=Number($('#fxAmount').value||0),t=$('#fxTarget').value,r=APPDATA.fx.rates[t];if(!r){$('#fxResult').textContent='無資料';return;}$('#fxResult').textContent=fmt(a*r)+' '+t;$('#fxText').textContent=`1 TWD ≈ ${Number(r).toFixed(5)} ${t} · ${APPDATA.fx.provider||''}`;}
-$('#fxTarget').onchange=convertFx;
-function calcLoan(){const p=Number($('#carPrice').value),d=Number($('#downPayment').value),rate=Number($('#annualRate').value)/100,n=Number($('#months').value),principal=p-d;if(!(p>0)||principal<0||!(n>0)||rate<0){$('#loanResult').innerHTML='<span class="err">請檢查輸入值</span>';return;}const mr=rate/12,pmt=mr===0?principal/n:principal*mr*Math.pow(1+mr,n)/(Math.pow(1+mr,n)-1),interest=pmt*n-principal;$('#loanResult').innerHTML=`<div class="small">貸款本金</div><div class="metric">${money(principal)}</div><div class="row" style="margin-top:10px"><div><div class="small">每月約</div><b>${money(pmt)}</b></div><div><div class="small">總利息約</div><b>${money(interest)}</b></div></div>`;}
-function calcEnergy(){const km=Number($('#monthlyKm').value),kml=Number($('#gasKml').value),gp=Number($('#gasPrice').value),wh=Number($('#evWhkm').value),ep=Number($('#electricityPrice').value);const gas=km/kml*gp,ev=km*(wh/1000)*ep,diff=gas-ev;$('#energyResult').innerHTML=`<div class="row"><div><div class="small">油車每月</div><b>${money(gas)}</b></div><div><div class="small">電車每月</div><b>${money(ev)}</b></div><div><div class="small">每月差額</div><b>${money(diff)}</b></div></div><div class="small" style="margin-top:8px">一年能源成本差約 ${money(diff*12)}</div>`;}
-calcLoan();calcEnergy();loadData();
+let DATA={fx:{}};
+const fmt=n=>Number(n).toLocaleString('zh-TW',{maximumFractionDigits:2});
+const money=n=>'NT$ '+Math.round(n).toLocaleString('zh-TW');
+
+function renderStock(code){
+  const s=DATA.stocks?.[code];
+  if(!s)return;
+  document.querySelector('#p'+code).textContent=s.close ?? '--';
+  const el=document.querySelector('#c'+code);
+  const ch=Number(s.change||0);
+  el.textContent=(ch>0?'+':'')+ch;
+  el.className='small '+(ch>0?'bad':ch<0?'ok':'');
+}
+function render(){
+  renderStock('0050');renderStock('0056');
+  if(DATA.fx?.USD_TWD) document.querySelector('#usd').textContent=Number(DATA.fx.USD_TWD).toFixed(2);
+  if(DATA.weather){
+    document.querySelector('#temp').textContent=fmt(DATA.weather.temperature)+'°';
+    document.querySelector('#weatherText').textContent=`${DATA.weather.description} · 體感 ${fmt(DATA.weather.apparent)}°`;
+  }
+  if(DATA.updated_at) document.querySelector('#updated').textContent='最後更新：'+DATA.updated_at;
+}
+async function load(){
+  try{
+    const r=await fetch('./data.json?ts='+Date.now(),{cache:'no-store'});
+    if(!r.ok) throw new Error();
+    DATA=await r.json();render();
+  }catch(e){
+    document.querySelector('#updated').textContent='資料尚未建立，請先執行 GitHub Actions';
+  }
+}
+function convertFx(){
+  const t=document.querySelector('#fxTarget').value;
+  const amt=Number(document.querySelector('#fxAmount').value||0);
+  const rate=DATA.fx?.['TWD_'+t];
+  if(!rate){document.querySelector('#fxResult').textContent='尚無匯率資料';return;}
+  document.querySelector('#fxResult').textContent=fmt(amt*rate)+' '+t;
+  document.querySelector('#fxRate').textContent='1 TWD ≈ '+Number(rate).toFixed(5)+' '+t;
+}
+function loan(){
+  const p=Number(document.querySelector('#price').value),d=Number(document.querySelector('#down').value);
+  const annual=Number(document.querySelector('#rate').value)/100,n=Number(document.querySelector('#months').value);
+  const principal=p-d,mr=annual/12;
+  const pay=mr===0?principal/n:principal*mr*Math.pow(1+mr,n)/(Math.pow(1+mr,n)-1);
+  const interest=pay*n-principal;
+  document.querySelector('#loanResult').innerHTML=`<b>每月約 ${money(pay)}</b><br><span class="small">貸款本金 ${money(principal)} · 總利息約 ${money(interest)}</span>`;
+}
+loan();load();
 </script>
-</body></html>
+</body>
+</html>
