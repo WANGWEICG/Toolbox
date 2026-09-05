@@ -1,6 +1,22 @@
 {
-  "updated_at": "尚未由 GitHub Actions 更新",
-  "stocks": {},
+  "updated_at": "2026-09-05 15:41 UTC",
+  "stocks": {
+    "0050": {
+      "name": "元大台灣50",
+      "close": 107.9,
+      "change": 1.7
+    },
+    "0056": {
+      "name": "元大高股息",
+      "close": 55.4,
+      "change": 0.9
+    }
+  },
   "fx": {},
-  "weather": {}
+  "weather": {
+    "temperature": 26.7,
+    "apparent": 32.9,
+    "description": "晴時多雲"
+  },
+  "fx_error": "HTTP Error 404: Not Found"
 }
