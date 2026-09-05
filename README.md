@@ -1,26 +1,24 @@
-# 王偉的萬用工具箱 v1
+# 王偉的萬用工具箱 v2 Stable
 
-手機優先的純前端 PWA，可直接部署到 GitHub Pages。
+這版的核心改變：**瀏覽器不再直接呼叫 TWSE / Frankfurter / Open-Meteo**。
 
-## v1 功能
-- 0050 / 0056：臺灣證券交易所 OpenAPI（非券商即時逐筆報價）
-- TWD 匯率：Frankfurter
-- 手機定位天氣：Open-Meteo
-- 車貸試算：一般本息攤還 + 利息先繳模式
-- 油車 vs 電車能源成本
-- Tesla 台灣 / TWSE / 中央氣象署 / 168 官方入口
-- 本機快取與離線 App shell
-- 可加入 iPhone / Android 主畫面
+GitHub Actions 會定時執行 `scripts/update_data.py`，把結果寫進 `data/summary.json`。GitHub Pages 只需要讀取同一個網站下的 `data/summary.json`，因此大幅降低 iPhone / PWA / CORS 導致的「連線失敗」。
 
-## GitHub Pages 部署
-1. 建立一個新的 GitHub repository，例如 `wangwei-toolbox`
-2. 把本資料夾所有檔案上傳到 repository 根目錄
-3. GitHub → Settings → Pages
-4. Build and deployment 選 `Deploy from a branch`
-5. Branch 選 `main` / `(root)` → Save
-6. 等 GitHub Pages 網址出現後，用 Safari 開啟
-7. iPhone：分享 → 加入主畫面
+## 第一次安裝後一定要做一次
 
-## 注意
-外部 API 是否能被瀏覽器直接讀取，仍受 API 端 CORS、臨時維護與網路環境影響。
-本 App 若讀取失敗會提示，不會拿假資料冒充即時資料。
+1. GitHub Repository → **Actions**
+2. 左側選 **Update Toolbox Data**
+3. 按 **Run workflow**
+4. 執行成功後，Repository 會自動更新 `data/summary.json`
+5. GitHub Pages 重新發布後，工具箱就會顯示資料
+
+## GitHub Pages
+
+設定維持：Settings → Pages → Deploy from a branch → `main` → `/(root)`。
+
+## 排程
+
+- 台灣平日市場時段附近：每 30 分鐘更新
+- 其他時間：每 3 小時更新
+
+> GitHub Actions 的 schedule 不是即時報價系統，可能會延遲數分鐘。0050 / 0056 仍應視為參考資料，不是券商逐筆即時成交資訊。
