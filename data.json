@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-23 23:42 UTC",
+  "updated_at": "2026-09-24 04:53 UTC",
   "stocks": {
     "0050": {
       "name": "元大台灣50",
@@ -14,9 +14,9 @@
   },
   "fx": {},
   "weather": {
-    "temperature": 27.8,
-    "apparent": 32.7,
-    "description": "晴時多雲"
+    "temperature": 30.0,
+    "apparent": 34.4,
+    "description": "多雲"
   },
   "fx_error": "HTTP Error 404: Not Found"
 }
