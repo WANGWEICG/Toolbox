@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-25 13:49 UTC",
+  "updated_at": "2026-09-25 18:37 UTC",
   "stocks": {
     "0050": {
       "name": "元大台灣50",
@@ -14,7 +14,7 @@
   },
   "fx": {},
   "weather": {
-    "temperature": 28.5,
+    "temperature": 27.0,
     "apparent": 32.9,
     "description": "晴朗"
   },
