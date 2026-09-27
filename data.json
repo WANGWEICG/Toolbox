@@ -1,22 +1,12 @@
 {
-  "updated_at": "2026-09-27 08:12 UTC",
-  "stocks": {
-    "0050": {
-      "name": "元大台灣50",
-      "close": 112.4,
-      "change": -0.05
-    },
-    "0056": {
-      "name": "元大高股息",
-      "close": 56.65,
-      "change": 0.05
-    }
-  },
+  "updated_at": "2026-09-27 14:01 UTC",
+  "stocks": {},
   "fx": {},
   "weather": {
-    "temperature": 29.7,
-    "apparent": 33.4,
+    "temperature": 27.7,
+    "apparent": 33.1,
     "description": "多雲"
   },
+  "stocks_error": "Expecting value: line 1 column 1 (char 0)",
   "fx_error": "HTTP Error 404: Not Found"
 }
