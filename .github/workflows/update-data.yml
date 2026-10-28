@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: toolbox-data-update
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -24,78 +28,89 @@ jobs:
       - name: Fetch public data
         run: |
           python - <<'PY'
-          import json
-          import urllib.request
           import datetime
-
+          import json
+          import math
+          import urllib.request
+          
           def get_json(url):
               req = urllib.request.Request(
                   url,
                   headers={
-                      "User-Agent": "Mozilla/5.0",
-                      "Accept": "application/json"
-                  }
+                      "User-Agent": "WangWeiToolbox/5.0 (GitHub Actions)",
+                      "Accept": "application/json",
+                  },
               )
-              with urllib.request.urlopen(req, timeout=25) as r:
-                  return json.load(r)
-
+              with urllib.request.urlopen(req, timeout=25) as response:
+                  return json.load(response)
+          
           out = {
-              "updated_at": datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d %H:%M UTC"),
+              "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
               "stocks": {},
               "fx": {},
-              "weather": {}
+              "weather": {},
           }
-
-          # 0050 / 0056 - TWSE
+          
+          # TWSE 0050 / 0056.  Reference prices, not a real-time market feed.
           try:
-              rows = get_json(
-                  "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
-              )
-
-              def num(v):
+              rows = get_json("https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL")
+              if not isinstance(rows, list):
+                  raise ValueError("TWSE response is not an array")
+          
+              def num(value):
                   try:
-                      return float(
-                          str(v).replace(",", "").replace("+", "").strip()
-                      )
-                  except Exception:
+                      n = float(str(value).replace(",", "").replace("+", "").strip())
+                      return n if math.isfinite(n) else None
+                  except (ValueError, TypeError):
                       return None
-
+          
               for code in ("0050", "0056"):
-                  row = next(
-                      (
-                          x for x in rows
-                          if str(x.get("Code", "")).strip() == code
-                      ),
-                      None
-                  )
+                  row = next((x for x in rows if str(x.get("Code", "")).strip() == code), None)
                   if row:
                       out["stocks"][code] = {
                           "name": row.get("Name", ""),
                           "close": num(row.get("ClosingPrice")),
-                          "change": num(row.get("Change"))
+                          "change": num(row.get("Change")),
                       }
-
+              if any(out["stocks"].get(code, {}).get("close") is None for code in ("0050", "0056")):
+                  out["stocks_error"] = "TWSE ETF closing price incomplete"
           except Exception as e:
               out["stocks_error"] = str(e)
-
-          # Foreign exchange
+          
+          # Frankfurter v2 supports TWD and returns an ARRAY of rate objects.
           try:
-              fx = get_json(
-                  "https://api.frankfurter.dev/v1/latest"
-                  "?base=TWD&symbols=USD,JPY,PHP,EUR,GBP,CNY"
+              fx_rows = get_json(
+                  "https://api.frankfurter.dev/v2/rates"
+                  "?base=TWD&quotes=USD,JPY,PHP,EUR,GBP,CNY"
               )
-              rates = fx.get("rates", {})
-
-              for currency, value in rates.items():
-                  out["fx"]["TWD_" + currency] = value
-
-              if rates.get("USD"):
-                  out["fx"]["USD_TWD"] = 1 / rates["USD"]
-
+              if not isinstance(fx_rows, list):
+                  raise ValueError("Frankfurter v2 rates response is not an array")
+              wanted = {"USD", "JPY", "PHP", "EUR", "GBP", "CNY"}
+              for row in fx_rows:
+                  if not isinstance(row, dict):
+                      continue
+                  base = str(row.get("base", "")).upper()
+                  quote = str(row.get("quote", "")).upper()
+                  if base != "TWD" or quote not in wanted:
+                      continue
+                  rate = float(row["rate"])
+                  if not math.isfinite(rate) or rate <= 0:
+                      raise ValueError("Invalid Frankfurter rate for " + quote)
+                  out["fx"]["TWD_" + quote] = rate
+                  if row.get("date"):
+                      out.setdefault("fx_dates", {})[quote] = str(row["date"])
+              missing = wanted - {k.removeprefix("TWD_") for k in out["fx"]}
+              if missing:
+                  out["fx_error"] = "Missing FX pairs: " + ", ".join(sorted(missing))
+              usd = out["fx"].get("TWD_USD")
+              if usd:
+                  out["fx"]["USD_TWD"] = 1 / usd
+              if out.get("fx_dates"):
+                  out["fx_date"] = max(out["fx_dates"].values())
           except Exception as e:
               out["fx_error"] = str(e)
-
-          # Kaohsiung weather
+          
+          # Kaohsiung current weather.
           try:
               w = get_json(
                   "https://api.open-meteo.com/v1/forecast"
@@ -105,39 +120,40 @@ jobs:
                   "&timezone=Asia%2FTaipei"
               )
               current = w.get("current", {})
-              code = int(current.get("weather_code", 0))
-
-              def weather_desc(code):
-                  if code == 0:
+              code = int(current.get("weather_code", -1))
+          
+              def weather_desc(value):
+                  if value == 0:
                       return "晴朗"
-                  if code in (1, 2):
+                  if value in (1, 2):
                       return "晴時多雲"
-                  if code == 3:
+                  if value == 3:
                       return "多雲"
-                  if code in (45, 48):
+                  if value in (45, 48):
                       return "霧"
-                  if code in (51, 53, 55, 56, 57):
+                  if value in (51, 53, 55, 56, 57):
                       return "毛毛雨"
-                  if code in (61, 63, 65, 66, 67):
+                  if value in (61, 63, 65, 66, 67):
                       return "下雨"
-                  if code in (80, 81, 82):
+                  if value in (80, 81, 82):
                       return "陣雨"
-                  if code in (95, 96, 99):
+                  if value in (95, 96, 99):
                       return "雷雨"
                   return "天氣"
-
+          
+              temp = current.get("temperature_2m")
+              if temp is None:
+                  raise ValueError("Open-Meteo has no current temperature")
               out["weather"] = {
-                  "temperature": current.get("temperature_2m"),
+                  "temperature": temp,
                   "apparent": current.get("apparent_temperature"),
-                  "description": weather_desc(code)
+                  "description": weather_desc(code),
               }
-
           except Exception as e:
               out["weather_error"] = str(e)
-
-          with open("data.json", "w", encoding="utf-8") as f:
-              json.dump(out, f, ensure_ascii=False, indent=2)
-
+          
+          with open("data.json", "w", encoding="utf-8") as file:
+              json.dump(out, file, ensure_ascii=False, indent=2)
           print(json.dumps(out, ensure_ascii=False, indent=2))
           PY
 
