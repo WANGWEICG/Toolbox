@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07101a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="王偉工具箱">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <title>王偉的萬用工具箱</title>
 <style>
 :root{
@@ -19,6 +24,7 @@ h1{font-size:31px;margin:10px 0 8px}
 .sub{color:var(--muted);font-size:14px;line-height:1.65}
 .status{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .pill{border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:12px;color:#cad5e8;background:#0c1524}
+.pill.warn{border-color:#b57d2b;color:#ffe1aa}.pill.error{border-color:#ad4654;color:#ffc5c8}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
 .card{background:linear-gradient(180deg,#121b2d,#0f1827);border:1px solid var(--line);border-radius:22px;padding:16px}
 .wide{grid-column:1/-1}
@@ -29,7 +35,7 @@ h2{font-size:17px;margin:0 0 4px}
 .symbol{font-size:15px;font-weight:900}
 .name{font-size:11px;color:var(--muted)}
 .price{font-size:24px;font-weight:900;margin-top:8px}
-.small{font-size:11px;color:var(--muted)}
+.small{font-size:11px;color:var(--muted);line-height:1.6}
 .up{color:var(--bad)} .down{color:var(--good)}
 .big{font-size:28px;font-weight:900}
 .forms{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -53,12 +59,13 @@ section{display:none}.active-section{display:grid}
 <body>
 <div class="wrap">
 <header>
-  <div class="eyebrow">WANG WEI TOOLBOX · V4 DATA MODE</div>
+  <div class="eyebrow">WANG WEI TOOLBOX · V5 DATA MODE</div>
   <h1>王偉的萬用工具箱</h1>
-  <div class="sub">現在所有市場、匯率與天氣資料都只讀取 GitHub 自己的 <b>data.json</b>，手機不再直接連第三方 API。</div>
+  <div class="sub">市場、匯率與天氣資料從 GitHub 自己的 <b>data.json</b> 載入，手機不直接連第三方 API。</div>
   <div class="status">
     <div class="pill" id="clock">台灣時間 --:--</div>
-    <div class="pill" id="dataStatus">資料載入中…</div>
+    <div class="pill" id="dataStatus" role="status" aria-live="polite">資料載入中…</div>
+    <div class="pill" id="dataAge">更新時間尚未取得</div>
     <div class="pill">🟢 GitHub Pages</div>
   </div>
 </header>
@@ -66,14 +73,14 @@ section{display:none}.active-section{display:grid}
 <section id="home" class="grid active-section">
   <div class="card wide">
     <h2>📈 今日快速看</h2>
-    <div class="desc">GitHub Actions 雲端更新資料</div>
+    <div class="desc">行情參考資料，非即時報價；請留意資料更新時間</div>
     <div class="quotes">
       <div class="quote"><div class="symbol">0050</div><div class="name">元大台灣50</div><div class="price" id="h0050">--</div><div class="small" id="hc0050">--</div></div>
       <div class="quote"><div class="symbol">0056</div><div class="name">元大高股息</div><div class="price" id="h0056">--</div><div class="small" id="hc0056">--</div></div>
     </div>
   </div>
   <div class="card">
-    <h2>💵 美元匯率</h2><div class="desc">1 USD ≈ TWD</div>
+    <h2>💵 美元匯率</h2><div class="desc">1 USD ≈ TWD · 參考匯率（非銀行牌告）</div>
     <div class="big" id="homeUsd">--</div>
     <div class="small" id="fxStatus">等待匯率資料</div>
   </div>
@@ -84,25 +91,25 @@ section{display:none}.active-section{display:grid}
   <div class="card wide">
     <h2>⚡ Tesla 台灣</h2>
     <div class="links">
-      <a href="https://www.tesla.com/zh_tw/modely" target="_blank"><strong>Model Y</strong><span>規格 / 訂購</span></a>
-      <a href="https://www.tesla.com/zh_tw" target="_blank"><strong>Tesla 台灣首頁</strong><span>官方最新活動</span></a>
+      <a href="https://www.tesla.com/zh_tw/modely" target="_blank" rel="noopener noreferrer"><strong>Model Y</strong><span>規格 / 訂購</span></a>
+      <a href="https://www.tesla.com/zh_tw" target="_blank" rel="noopener noreferrer"><strong>Tesla 台灣首頁</strong><span>官方最新活動</span></a>
     </div>
   </div>
 </section>
 
 <section id="market" class="grid">
   <div class="card wide">
-    <h2>📊 台股 ETF</h2><div class="desc">來源：data.json，不再由 Safari 直接呼叫證交所</div>
+    <h2>📊 台股 ETF</h2><div class="desc">來源：data.json，非即時報價</div>
     <div class="quotes">
       <div class="quote"><div class="symbol">0050</div><div class="name">元大台灣50</div><div class="price" id="m0050">--</div><div class="small" id="mc0050">--</div></div>
       <div class="quote"><div class="symbol">0056</div><div class="name">元大高股息</div><div class="price" id="m0056">--</div><div class="small" id="mc0056">--</div></div>
     </div>
   </div>
   <div class="card wide">
-    <h2>💱 匯率換算</h2>
+    <h2>💱 匯率換算</h2><div class="desc">以新台幣換算外幣，僅供估算</div>
     <div class="forms">
-      <div><label>台幣金額</label><input id="fxAmount" type="number" value="10000"></div>
-      <div><label>幣別</label><select id="fxTarget"><option>USD</option><option>JPY</option><option>PHP</option><option>EUR</option><option>GBP</option><option>CNY</option></select></div>
+      <div><label for="fxAmount">台幣金額</label><input id="fxAmount" type="number" min="0" step="any" value="10000"></div>
+      <div><label for="fxTarget">幣別</label><select id="fxTarget"><option>USD</option><option>JPY</option><option>PHP</option><option>EUR</option><option>GBP</option><option>CNY</option></select></div>
     </div>
     <button class="btn" onclick="convertFx()">換算</button>
     <div class="result"><div class="big" id="fxResult">--</div><div class="small" id="fxRateText">等待資料</div></div>
@@ -111,29 +118,29 @@ section{display:none}.active-section{display:grid}
 
 <section id="car" class="grid">
   <div class="card wide">
-    <h2>🚘 車貸試算</h2>
+    <h2>🚘 車貸試算</h2><div class="desc">本息平均攤還估算，不含設定費、手續費及其他額外費用</div>
     <div class="forms">
-      <div><label>車價</label><input id="price" type="number" value="2010900"></div>
-      <div><label>頭期款</label><input id="down" type="number" value="280000"></div>
-      <div><label>年利率 %</label><input id="rate" type="number" step="0.01" value="2.13"></div>
-      <div><label>期數</label><input id="months" type="number" value="84"></div>
+      <div><label for="price">車價</label><input id="price" type="number" min="1" step="1" value="2010900"></div>
+      <div><label for="down">頭期款</label><input id="down" type="number" min="0" step="1" value="280000"></div>
+      <div><label for="rate">年利率 %</label><input id="rate" type="number" min="0" max="100" step="0.01" value="2.13"></div>
+      <div><label for="months">期數</label><input id="months" type="number" min="1" max="360" step="1" value="84"></div>
     </div>
     <button class="btn" onclick="calcLoan()">計算</button>
-    <div class="result" id="loanResult">--</div>
+    <div class="result" id="loanResult" role="status" aria-live="polite">--</div>
   </div>
 </section>
 
 <section id="more" class="grid">
   <div class="card wide">
     <h2>🩺 資料狀態</h2>
-    <div class="desc">只要 data.json 有資料，這個頁面就會顯示。</div>
+    <div class="desc">檢查每一項資料是否正常、是否過期</div>
     <div class="result"><div id="debugText" class="small">尚未載入</div></div>
-    <button class="btn" onclick="hardRefresh()">清除舊快取並重新載入</button>
+    <button class="btn" onclick="hardRefresh()">更新頁面與清除工具箱快取</button>
   </div>
 </section>
 </div>
 
-<nav class="nav">
+<nav class="nav" aria-label="主要分頁">
   <button class="active" data-tab="home"><span>⌂</span>首頁</button>
   <button data-tab="market"><span>📊</span>市場</button>
   <button data-tab="car"><span>🚗</span>用車</button>
@@ -142,12 +149,15 @@ section{display:none}.active-section{display:grid}
 
 <script>
 let DATA={fx:{}};
+let DATA_LOADED=false;
 const $=s=>document.querySelector(s);
 const fmt=n=>Number(n).toLocaleString('zh-TW',{maximumFractionDigits:2});
-const money=n=>'NT$ '+Math.round(Number(n)||0).toLocaleString('zh-TW');
+const money=n=>'NT$ '+Math.round(n).toLocaleString('zh-TW');
+const STALE_AFTER_MS=3*60*60*1000;
 
 function setClock(){
   $('#clock').textContent='台灣時間 '+new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
+  updateDataAge();
 }
 setClock();setInterval(setClock,30000);
 
@@ -158,91 +168,166 @@ document.querySelectorAll('.nav button').forEach(btn=>btn.onclick=()=>{
   $('#'+btn.dataset.tab).classList.add('active-section');
 });
 
+function readUpdateTime(raw){
+  if(typeof raw!=='string')return null;
+  // Existing data format is "YYYY-MM-DD HH:mm UTC". Newer ISO 8601 is also accepted.
+  const iso=raw.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})(?::\d{2})? UTC$/);
+  const d=new Date(iso?`${iso[1]}T${iso[2]}:00Z`:raw);
+  return Number.isFinite(d.getTime())?d:null;
+}
+function ageState(now=Date.now()){
+  const time=readUpdateTime(DATA.updated_at);
+  if(!time)return {stale:true,label:'⚠️ 無法確認資料更新時間'};
+  const delta=now-time.getTime();
+  if(delta < -5*60*1000)return {stale:true,label:'⚠️ 資料時間異常（位於未來）'};
+  const minutes=Math.max(0,Math.floor(delta/60000));
+  const timeText=new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(time);
+  return {stale:delta>STALE_AFTER_MS,label:(delta>STALE_AFTER_MS?'⚠️ 資料已過期 · ':'更新於 ')+timeText+'（約 '+(minutes>=60?Math.floor(minutes/60)+' 小時 ': '')+(minutes%60)+' 分鐘前）'};
+}
+function updateDataAge(){
+  if(!DATA_LOADED)return;
+  const age=ageState();
+  const el=$('#dataAge');
+  el.textContent=age.label;
+  el.className='pill'+(age.stale?' warn':'');
+  updateOverallStatus();
+}
+function sourceState(){
+  const stocks=['0050','0056'].every(code=>Number.isFinite(Number(DATA.stocks?.[code]?.close)) && DATA.stocks[code].close!==null);
+  const fx=['USD','JPY','PHP','EUR','GBP','CNY'].every(code=>Number.isFinite(Number(DATA.fx?.['TWD_'+code]))&&Number(DATA.fx['TWD_'+code])>0);
+  const weather=Number.isFinite(Number(DATA.weather?.temperature)) && DATA.weather?.temperature!==null && DATA.weather?.temperature!==undefined;
+  return {stocks,fx,weather};
+}
+function updateOverallStatus(){
+  if(!DATA_LOADED)return;
+  const sources=sourceState();
+  const age=ageState();
+  const problems=[];
+  if(!sources.stocks)problems.push('股票');
+  if(!sources.fx)problems.push('匯率');
+  if(!sources.weather)problems.push('天氣');
+  const el=$('#dataStatus');
+  if(problems.length){el.textContent='⚠️ '+problems.join('、')+'資料不足';el.className='pill warn';}
+  else if(age.stale){el.textContent='⚠️ 資料過期';el.className='pill warn';}
+  else {el.textContent='✅ 資料正常';el.className='pill';}
+}
 function renderStock(code){
   const s=DATA.stocks?.[code];
-  const price=s?.close ?? '--';
+  const close=s?.close;
+  const price=close!==undefined&&close!==null&&Number.isFinite(Number(close))?fmt(close):'--';
   const change=s?.change;
   ['h','m'].forEach(prefix=>{
     $('#'+prefix+code).textContent=price;
     const el=$('#'+prefix+'c'+code);
-    if(change===undefined||change===null){el.textContent='--';return;}
+    if(change===undefined||change===null||!Number.isFinite(Number(change))){el.textContent='--';el.className='small';return;}
     const n=Number(change);
-    el.textContent=(n>0?'+':'')+n;
+    el.textContent=(n>0?'+':'')+fmt(n);
     el.className='small '+(n>0?'up':n<0?'down':'');
   });
 }
-
 function render(){
   renderStock('0050');
   renderStock('0056');
-
-  if(DATA.fx?.USD_TWD){
-    $('#homeUsd').textContent=Number(DATA.fx.USD_TWD).toFixed(2);
-    $('#fxStatus').textContent='匯率資料正常';
+  const usd=Number(DATA.fx?.USD_TWD);
+  if(Number.isFinite(usd)&&usd>0){
+    $('#homeUsd').textContent=usd.toFixed(2);
+    $('#fxStatus').textContent='參考日期：'+(DATA.fx_date||'未提供');
   }else{
     $('#homeUsd').textContent='--';
-    $('#fxStatus').textContent='目前 data.json 尚無匯率資料';
+    $('#fxStatus').textContent='⚠️ 匯率資料不足'+(DATA.fx_error?'（更新失敗）':'');
   }
-
-  if(DATA.weather?.temperature!==undefined){
-    $('#homeTemp').textContent=fmt(DATA.weather.temperature)+'°';
-    $('#homeWeather').textContent=(DATA.weather.description||'')+' · 體感 '+fmt(DATA.weather.apparent)+'°';
+  const temp=DATA.weather?.temperature;
+  if(temp!==undefined&&temp!==null&&Number.isFinite(Number(temp))){
+    $('#homeTemp').textContent=fmt(temp)+'°';
+    const apparent=DATA.weather?.apparent;
+    $('#homeWeather').textContent=(DATA.weather.description||'')+(apparent!==null&&apparent!==undefined&&Number.isFinite(Number(apparent))?' · 體感 '+fmt(apparent)+'°':'');
+  }else{
+    $('#homeTemp').textContent='--°';
+    $('#homeWeather').textContent='⚠️ 天氣資料不足';
   }
-
-  $('#dataStatus').textContent='✅ 資料已載入';
-  $('#debugText').textContent='最後更新：'+(DATA.updated_at||'未知')+
-    '｜股票：'+(Object.keys(DATA.stocks||{}).length?'有':'無')+
-    '｜匯率：'+(Object.keys(DATA.fx||{}).length?'有':'無')+
-    '｜天氣：'+(DATA.weather?.temperature!==undefined?'有':'無');
+  updateDataAge();
+  const s=sourceState();
+  $('#debugText').textContent='資料更新：'+(DATA.updated_at||'未知')+
+    '｜股票：'+(s.stocks?'正常':'失敗')+
+    '｜匯率：'+(s.fx?'正常':'失敗')+
+    '｜天氣：'+(s.weather?'正常':'失敗')+
+    (DATA.fx_error?'｜匯率錯誤：'+DATA.fx_error:'')+
+    (DATA.stocks_error?'｜股票錯誤：'+DATA.stocks_error:'')+
+    (DATA.weather_error?'｜天氣錯誤：'+DATA.weather_error:'');
 }
-
 async function loadData(){
   try{
     const r=await fetch('./data.json?v='+Date.now(),{cache:'no-store'});
     if(!r.ok)throw new Error('HTTP '+r.status);
-    DATA=await r.json();
+    const result=await r.json();
+    if(!result||typeof result!=='object'||Array.isArray(result))throw new Error('資料格式不正確');
+    DATA=result;
+    DATA_LOADED=true;
     render();
   }catch(e){
+    DATA_LOADED=false;
     $('#dataStatus').textContent='❌ data.json 讀取失敗';
-    $('#debugText').textContent='錯誤：'+e.message;
+    $('#dataStatus').className='pill error';
+    $('#debugText').textContent='讀取錯誤：'+e.message;
+    $('#dataAge').textContent='⚠️ 無法確認資料新鮮度';
+    $('#dataAge').className='pill warn';
   }
 }
-
 function convertFx(){
   const t=$('#fxTarget').value;
-  const amt=Number($('#fxAmount').value||0);
-  const rate=DATA.fx?.['TWD_'+t];
-  if(!rate){
+  const raw=$('#fxAmount').value;
+  const amt=Number(raw);
+  if(raw.trim()===''||!Number.isFinite(amt)||amt<0){
+    $('#fxResult').textContent='請輸入有效的非負台幣金額';
+    $('#fxRateText').textContent='';return;
+  }
+  const rate=Number(DATA.fx?.['TWD_'+t]);
+  if(!Number.isFinite(rate)||rate<=0){
     $('#fxResult').textContent='尚無匯率資料';
-    $('#fxRateText').textContent='請先讓 GitHub Actions 成功寫入 fx';
-    return;
+    $('#fxRateText').textContent='等待 GitHub Actions 成功更新匯率';return;
   }
   $('#fxResult').textContent=fmt(amt*rate)+' '+t;
-  $('#fxRateText').textContent='1 TWD ≈ '+Number(rate).toFixed(5)+' '+t;
+  $('#fxRateText').textContent='1 TWD ≈ '+rate.toFixed(5)+' '+t+' · 參考日期：'+(DATA.fx_date||'未提供');
 }
-
 function calcLoan(){
-  const p=Number($('#price').value),d=Number($('#down').value),annual=Number($('#rate').value)/100,n=Number($('#months').value);
-  const principal=p-d,mr=annual/12;
-  const pay=mr===0?principal/n:principal*mr*Math.pow(1+mr,n)/(Math.pow(1+mr,n)-1);
-  const interest=pay*n-principal;
-  $('#loanResult').innerHTML='<b>每月約 '+money(pay)+'</b><br><span class="small">貸款本金 '+money(principal)+' · 總利息約 '+money(interest)+'</span>';
+  const fields=['price','down','rate','months'];
+  const values=fields.map(id=>$('#'+id).value.trim());
+  const result=$('#loanResult');
+  const error=msg=>{result.textContent='⚠️ '+msg;result.className='result err';};
+  if(values.some(v=>v===''))return error('所有欄位都必須填寫');
+  const [p,d,rate,n]=values.map(Number);
+  if(![p,d,rate,n].every(Number.isFinite))return error('請輸入有效數字');
+  if(p<=0)return error('車價必須大於 0');
+  if(d<0||d>p)return error('頭期款必須介於 0 與車價之間');
+  if(rate<0||rate>100)return error('年利率必須介於 0% 到 100%');
+  if(!Number.isInteger(n)||n<1||n>360)return error('期數必須為 1 到 360 的整數');
+  const principal=p-d,mr=rate/1200;
+  // Numerically stable annuity formula; zero-rate and paid-in-full handled separately.
+  const pay=principal===0?0:mr===0?principal/n:principal*mr/(-Math.expm1(-n*Math.log1p(mr)));
+  const interest=principal===0?0:Math.max(0,pay*n-principal);
+  if(!Number.isFinite(pay)||!Number.isFinite(interest))return error('輸入數值超出可計算範圍');
+  result.className='result';
+  result.textContent='';
+  const heading=document.createElement('b');heading.textContent='每月約 '+money(pay);
+  const more=document.createElement('span');more.className='small';more.textContent='貸款本金 '+money(principal)+' · 總利息約 '+money(interest);
+  result.append(heading,document.createElement('br'),more);
 }
-
 async function hardRefresh(){
   try{
     if('serviceWorker' in navigator){
-      const regs=await navigator.serviceWorker.getRegistrations();
-      for(const r of regs)await r.unregister();
+      const reg=await navigator.serviceWorker.getRegistration('./');
+      if(reg)await reg.unregister();
     }
     if('caches' in window){
       const keys=await caches.keys();
-      for(const k of keys)await caches.delete(k);
+      await Promise.all(keys.filter(k=>k.startsWith('wangwei-toolbox-')).map(k=>caches.delete(k)));
     }
-  }catch(e){}
+  }catch(e){console.warn('清理工具箱快取時發生問題',e);}
   location.replace(location.pathname+'?v='+Date.now());
 }
-
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(err=>console.warn('工具箱離線快取無法啟用',err)));
+}
 calcLoan();
 loadData();
 </script>
