@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-01T15:11:11+00:00",
+  "updated_at": "2026-11-01T19:43:01+00:00",
   "stocks": {
     "0050": {
       "name": "元大台灣50",
@@ -22,8 +22,8 @@
     "USD_TWD": 32.553143005957224
   },
   "weather": {
-    "temperature": 26.6,
-    "apparent": 31.1,
+    "temperature": 25.5,
+    "apparent": 29.6,
     "description": "晴朗"
   },
   "fx_dates": {
