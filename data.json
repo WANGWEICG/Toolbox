@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T22:49:33+00:00",
+  "updated_at": "2026-11-16T02:44:15+00:00",
   "stocks": {
     "0050": {
       "name": "元大台灣50",
@@ -13,26 +13,23 @@
     }
   },
   "fx": {
-    "TWD_CNY": 0.20236,
-    "TWD_EUR": 0.027417,
-    "TWD_GBP": 0.022905,
-    "TWD_JPY": 4.855,
+    "TWD_CNY": 0.20235,
+    "TWD_EUR": 0.027421,
+    "TWD_GBP": 0.022907,
+    "TWD_JPY": 4.8555,
     "TWD_PHP": 1.9351,
     "TWD_USD": 0.030363,
     "USD_TWD": 32.93482198728716
   },
-  "weather": {
-    "temperature": 23.0,
-    "apparent": 27.4,
-    "description": "霧"
-  },
+  "weather": {},
   "fx_dates": {
     "CNY": "2026-11-16",
     "EUR": "2026-11-16",
     "GBP": "2026-11-16",
     "JPY": "2026-11-16",
-    "PHP": "2026-11-15",
+    "PHP": "2026-11-16",
     "USD": "2026-11-15"
   },
-  "fx_date": "2026-11-16"
+  "fx_date": "2026-11-16",
+  "weather_error": "<urlopen error _ssl.c:994: The handshake operation timed out>"
 }
