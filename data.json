@@ -1,38 +1,35 @@
 {
-  "updated_at": "2026-11-20T21:06:25+00:00",
+  "updated_at": "2026-11-21T02:17:08+00:00",
   "stocks": {
     "0050": {
       "name": "元大台灣50",
-      "close": 90.2,
-      "change": -3.9
+      "close": 84.45,
+      "change": -5.75
     },
     "0056": {
       "name": "元大高股息",
-      "close": 47.41,
-      "change": -2.07
+      "close": 44.31,
+      "change": -3.1
     }
   },
   "fx": {
-    "TWD_CNY": 0.20213,
-    "TWD_EUR": 0.027586,
-    "TWD_GBP": 0.023073,
-    "TWD_JPY": 4.8352,
-    "TWD_PHP": 1.9327,
-    "TWD_USD": 0.030314,
-    "USD_TWD": 32.98805832288711
+    "TWD_CNY": 0.20216,
+    "TWD_EUR": 0.027588,
+    "TWD_GBP": 0.023077,
+    "TWD_JPY": 4.8346,
+    "TWD_PHP": 1.9328,
+    "TWD_USD": 0.030316,
+    "USD_TWD": 32.98588204248582
   },
-  "weather": {
-    "temperature": 16.5,
-    "apparent": 15.2,
-    "description": "毛毛雨"
-  },
+  "weather": {},
   "fx_dates": {
-    "CNY": "2026-11-20",
-    "EUR": "2026-11-20",
-    "GBP": "2026-11-20",
-    "JPY": "2026-11-20",
+    "CNY": "2026-11-21",
+    "EUR": "2026-11-21",
+    "GBP": "2026-11-21",
+    "JPY": "2026-11-21",
     "PHP": "2026-11-20",
     "USD": "2026-11-20"
   },
-  "fx_date": "2026-11-20"
+  "fx_date": "2026-11-21",
+  "weather_error": "<urlopen error _ssl.c:994: The handshake operation timed out>"
 }
