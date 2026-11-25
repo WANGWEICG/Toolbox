@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T04:16:13+00:00",
+  "updated_at": "2026-11-25T15:37:17+00:00",
   "stocks": {
     "0050": {
       "name": "元大台灣50",
@@ -13,17 +13,17 @@
     }
   },
   "fx": {
-    "TWD_CNY": 0.20237,
-    "TWD_EUR": 0.027743,
-    "TWD_GBP": 0.02321,
-    "TWD_JPY": 4.8362,
-    "TWD_PHP": 1.9374,
-    "TWD_USD": 0.030374,
-    "USD_TWD": 32.92289458089155
+    "TWD_CNY": 0.20208,
+    "TWD_EUR": 0.027693,
+    "TWD_GBP": 0.023165,
+    "TWD_JPY": 4.8306,
+    "TWD_PHP": 1.9322,
+    "TWD_USD": 0.030319,
+    "USD_TWD": 32.98261816022956
   },
   "weather": {
-    "temperature": 23.8,
-    "apparent": 25.7,
+    "temperature": 22.0,
+    "apparent": 24.7,
     "description": "多雲"
   },
   "fx_dates": {
